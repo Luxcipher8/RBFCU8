@@ -1,10 +1,13 @@
 package com.matera.digitalwallet.model.entities;
 
+import com.matera.digitalwallet.exceptions.InsufficientFundsException;
+import com.matera.digitalwallet.exceptions.InvalidValueException;
 import com.matera.digitalwallet.model.dto.AccountDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Slf4j
 @Entity
 @Getter
 @Setter
@@ -42,27 +46,33 @@ public class Account {
 
     public void credit(BigDecimal value) {
         this.validate(value);
-        balance.add(value);
+        balance = balance.add(value);
+
+        log.info("Conta {}/{} foi creditada com o valor R${}.",
+                this.agency, this.number, value);
     }
 
     public void debit(BigDecimal value) {
         this.validate(value);
 
         if (value.compareTo(balance) > 0) {
-            throw new RuntimeException();
+            throw new InsufficientFundsException("A Conta não tem saldo suficiente para atender a solicitação.");
         }
 
-        balance.subtract(value);
+        balance = balance.subtract(value);
+        log.info("Conta {}/{} foi debitada com o valor R${}.",
+                this.agency, this.number, value);
     }
 
     private void validate(BigDecimal value) {
+        final String message = String.format("O valor %s é inválido.", value);
 
         if (value == null) {
-            throw new RuntimeException();
+            throw new InvalidValueException(message);
         }
 
         if (this.incorrectValue(value)) {
-            throw new RuntimeException();
+            throw new InvalidValueException(message);
         }
     }
 
