@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface HolderRepository extends JpaRepository<Holder, Long> {
-    List<Account> findByHolderId(Long id);
+    //List<Account> findByHolderId(Long id);
 }
