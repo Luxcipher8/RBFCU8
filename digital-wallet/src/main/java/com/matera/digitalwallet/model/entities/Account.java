@@ -2,8 +2,7 @@ package com.matera.digitalwallet.model.entities;
 
 import com.matera.digitalwallet.exceptions.InsufficientFundsException;
 import com.matera.digitalwallet.exceptions.InvalidValueException;
-import com.matera.digitalwallet.model.dto.AccountDto;
-import lombok.AllArgsConstructor;
+import com.matera.digitalwallet.model.dto.ResponseAccountDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -80,8 +79,8 @@ public class Account {
         return value.compareTo(BigDecimal.ZERO) <= 0;
     }
 
-    public AccountDto toAccountDto() {
-        AccountDto dto = new AccountDto();
+    public ResponseAccountDto toAccountDto() {
+        ResponseAccountDto dto = new ResponseAccountDto();
         dto.setAgency(this.getAgency());
         dto.setNumber(this.getNumber());
         dto.setBalance(this.getBalance());
