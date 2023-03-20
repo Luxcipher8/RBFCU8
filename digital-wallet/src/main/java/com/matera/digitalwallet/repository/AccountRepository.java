@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByAgencyAndNumber(int agency, int number);
+
+    Optional<Account> findByPix(String pixKey);
 }
