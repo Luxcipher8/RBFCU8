@@ -11,4 +11,5 @@ public class ResponseAccountDto {
     private int agency;
     private int number;
     private BigDecimal balance;
+    private String pixKey;
 }

@@ -9,4 +9,6 @@ public class RequestAccountDto {
     private int agency;
     private String name;
     private String cpf;
+    private int code;
+    private String pixKey;
 }
