@@ -1,7 +1,9 @@
 package com.matera.digitalwallet.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matera.digitalwallet.exceptions.InsufficientFundsException;
 import com.matera.digitalwallet.exceptions.InvalidValueException;
+import com.matera.digitalwallet.model.dto.PixBacenDto;
 import com.matera.digitalwallet.model.dto.ResponseAccountDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,15 +31,20 @@ public class Account {
     private int agency;
     private int number = new Random().nextInt(100000);
     private BigDecimal balance = BigDecimal.ZERO;
+    private String pix;
+    @ManyToOne
+    private Bank bank;
     @CreationTimestamp
     private LocalDateTime creationDate;
     @UpdateTimestamp
     private LocalDateTime updateTime;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "name_holder_id")
     private Holder holder;
     @ManyToMany
-    @JoinTable(name = "account_fares_type",
+    @JoinTable(
+            name = "account_fares_type",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "fares_types_id")
     )
@@ -84,6 +91,15 @@ public class Account {
         dto.setAgency(this.getAgency());
         dto.setNumber(this.getNumber());
         dto.setBalance(this.getBalance());
+        return dto;
+    }
+
+    public PixBacenDto toBacenDto() {
+        PixBacenDto dto = new PixBacenDto();
+        dto.setAgency(this.agency);
+        dto.setNumber(this.number);
+        dto.setKey(this.pix);
+        dto.setCpf(this.holder.getCpf());
         return dto;
     }
 }
