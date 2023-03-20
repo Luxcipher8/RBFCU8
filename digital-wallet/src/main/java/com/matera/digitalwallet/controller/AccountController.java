@@ -1,9 +1,9 @@
 package com.matera.digitalwallet.controller;
 
+import com.matera.digitalwallet.model.dto.PixDto;
 import com.matera.digitalwallet.model.dto.ResponseAccountDto;
 import com.matera.digitalwallet.model.dto.RequestAccountDto;
 import com.matera.digitalwallet.model.entities.Account;
-import com.matera.digitalwallet.repository.AccountRepository;
 import com.matera.digitalwallet.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/contas")
 public class AccountController {
-
-    private final AccountRepository accountRepository;
     private final AccountService accountService;
 
     @PostMapping(value = "/cadastro")
-    public ResponseAccountDto createAccount(@RequestBody RequestAccountDto requestAccountDto) throws InterruptedException {
+    public ResponseAccountDto createAccount(@RequestBody RequestAccountDto requestAccountDto) {
         Account account = accountService.createAccount(requestAccountDto);
-        account.setNumber(6544);
         return account.toAccountDto();
     }
 
@@ -58,5 +55,15 @@ public class AccountController {
                                           @PathVariable BigDecimal value) {
         accountService.transfer(idAccountDebited, idAccountCredited, value);
         return ResponseEntity.ok("Transferência realizada com sucesso.");
+    }
+
+    @PostMapping("/{debitedAccountId}/{pixKey}")
+    public ResponseEntity transferPix(
+            @PathVariable Long debitedAccountId,
+            @PathVariable String pixKey,
+            @RequestBody PixDto pixDto
+    ) {
+        accountService.pix(debitedAccountId, pixKey, pixDto.getValue());
+        return ResponseEntity.ok("Pix realizado com sucesso.");
     }
 }
