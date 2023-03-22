@@ -63,7 +63,14 @@ public class AccountService {
     }
 
     public List<Account> findAccounts() {
-        return accountRepository.findAll();
+
+        List<Account> accountList = accountRepository.findAll();
+
+        if (accountList.isEmpty()){
+            throw new InvalidAccountException("Não encontramos contas cadastradas em nossa base de dados.");
+        }
+
+        return accountList;
     }
 
     public Account findAccount(Long id) {
