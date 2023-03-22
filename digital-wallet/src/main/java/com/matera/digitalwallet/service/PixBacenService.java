@@ -22,7 +22,7 @@ public class PixBacenService {
     }
 
     public PixBacenDto findAccountCentralBank(String pixKey) {
-        String url = String.format("%s%s", ACCOUNTS_BACEN_URL, pixKey);
+        String url = String.format("%s/%s", ACCOUNTS_BACEN_URL, pixKey);
         PixBacenDto pixBacenDto = restTamplate.getForObject(url, PixBacenDto.class);
         log.info("Conta encontrada com sucesso no Banco Central: {}", pixBacenDto);
         return pixBacenDto;
