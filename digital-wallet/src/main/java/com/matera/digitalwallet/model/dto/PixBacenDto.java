@@ -9,7 +9,7 @@ public class PixBacenDto {
     private int agency;
     private String cpf;
     private int number;
-    private String key;
+    private String pixKey;
 
     @Override
     public String toString() {
@@ -17,7 +17,7 @@ public class PixBacenDto {
                 "agency=" + agency +
                 ", cpf='" + cpf + '\'' +
                 ", number=" + number +
-                ", key='" + key + '\'' +
+                ", key='" + pixKey + '\'' +
                 '}';
     }
 }
