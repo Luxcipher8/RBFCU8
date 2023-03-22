@@ -18,7 +18,7 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
 
-    @PostMapping(value = "/cadastro")
+    @PostMapping
     public ResponseAccountDto createAccount(@RequestBody RequestAccountDto requestAccountDto) {
         Account account = accountService.createAccount(requestAccountDto);
         return account.toAccountDto();
