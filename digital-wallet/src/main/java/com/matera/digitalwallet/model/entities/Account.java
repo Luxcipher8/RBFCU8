@@ -91,6 +91,7 @@ public class Account {
         dto.setAgency(this.getAgency());
         dto.setNumber(this.getNumber());
         dto.setBalance(this.getBalance());
+        dto.setPixKey(this.pix);
         return dto;
     }
 
@@ -98,7 +99,7 @@ public class Account {
         PixBacenDto dto = new PixBacenDto();
         dto.setAgency(this.agency);
         dto.setNumber(this.number);
-        dto.setKey(this.pix);
+        dto.setPixKey(this.pix);
         dto.setCpf(this.holder.getCpf());
         return dto;
     }

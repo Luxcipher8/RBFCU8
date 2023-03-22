@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Random;
 
 @Entity
 @Getter
@@ -14,6 +13,6 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private int bankCode = new Random().nextInt(1000);
+    private int bankCode = 455;
     private String bankName;
 }
